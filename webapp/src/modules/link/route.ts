@@ -8,12 +8,12 @@ const router = express.Router();
 const validator = LinkValidator();
 const controller = LinkController();
 
-router.get(
+router.post(
   '/create',
   ResponseHandler({
     validator: validator.createLink,
     controller: controller.createLink,
-    props: (req) => [req.body],
+    props: (req) => [req.body, req.ip, req.amqp],
   }),
 );
 

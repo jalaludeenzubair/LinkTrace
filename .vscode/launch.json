@@ -12,7 +12,9 @@
       "program": "${workspaceFolder}\\webapp\\dist\\server.js",
       "outFiles": ["${workspaceFolder}/**/*.js"],
       "env": {
-        "PORT": "8080"
+        "PORT": "8080",
+        "MONGODB_URI": "mongodb://127.0.0.1:27017/LinkTrace",
+        "RABBITMQ_URL": "amqp://guest:guest@localhost:5672/"
       }
     }
   ]

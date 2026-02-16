@@ -1,7 +1,15 @@
 interface LinkInterface {}
 
 const LinkController = () => ({
-  createLink: () => {},
+  createLink: (payload, ip, ch) => {
+    console.log(ip);
+    const { url } = payload;
+    const queuePayload = {
+      url,
+      ip,
+    };
+    console.log(queuePayload);
+  },
   deleteLink: () => {},
   getLink: () => {},
   updateLink: () => {},
