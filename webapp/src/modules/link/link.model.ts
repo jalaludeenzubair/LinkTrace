@@ -45,7 +45,7 @@ export class Link {
   @prop({ unique: true })
   public shortenUrl?: string;
 
-  @prop()
+  @prop({ default: [] })
   public history?: History[];
 
   @prop({ default: 1 })
@@ -53,6 +53,9 @@ export class Link {
 
   @prop({ default: Date.now() })
   public createdAt?: Date;
+
+  @prop()
+  public deletedAt?: Date;
 
   @prop({ default: Date.now() })
   public updatedAt?: Date;

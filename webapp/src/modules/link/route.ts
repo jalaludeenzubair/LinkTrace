@@ -13,7 +13,25 @@ router.post(
   ResponseHandler({
     validator: validator.createLink,
     controller: controller.createLink,
-    props: (req) => [req.body, req.ip, req.amqp],
+    props: (req) => [req.body],
+  }),
+);
+
+router.get(
+  '/get/:id',
+  ResponseHandler({
+    validator: validator.getLink,
+    controller: controller.getLink,
+    props: (req) => [req.params.id],
+  }),
+);
+
+router.delete(
+  '/delete',
+  ResponseHandler({
+    validator: validator.deleteLink,
+    controller: controller.deleteLink,
+    props: (req) => [req.body],
   }),
 );
 

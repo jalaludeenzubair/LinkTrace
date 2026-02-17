@@ -14,11 +14,11 @@ const ErrorHandler = (res, error) => {
 };
 
 const ResponseHandler = ({ validator, controller, props }) => {
-  return (req, res) => {
+  return async (req, res) => {
     try {
       const propValues = props ? props(req) : [];
       validator(...propValues);
-      const result = controller(...propValues);
+      const result = await controller(...propValues);
       return SuccessHandler(res, result);
     } catch (error) {
       return ErrorHandler(res, error.message);

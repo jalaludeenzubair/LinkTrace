@@ -2,7 +2,7 @@ import Consumer from '../core/consumer.js';
 
 const consumer = new Consumer();
 
-const arr = ['./lib/index.js'];
+const arr = ['./link/index.js'];
 
 export const consumeFromQueue = async (queueName, actions): Promise<void> => {
   const ch = consumer.getChannel();

@@ -1,18 +1,21 @@
-import { QUEUE_NAME } from '../../constants/queue.js';
+import { generateUniqueID } from '../../core/helper.js';
+import LinkModel from './link.model.js';
 
 interface LinkInterface {}
 
 const LinkController = () => ({
-  createLink: (payload, ip, ch) => {
+  createLink: async (payload) => {
     const { url } = payload;
-    const queuePayload = {
-      body: { originalUrl: 'url', ip: '24.48.0.1' },
-      type: 'CREATE_DATA',
-    };
-    ch.publishToQueue(QUEUE_NAME.IP, queuePayload);
-    return 'Pushed to the Queue Successfully';
+    const shortenUrl = generateUniqueID();
+    await LinkModel.insertOne({ originalUrl: url, shortenUrl });
+    return shortenUrl;
   },
-  deleteLink: () => {},
+  deleteLink: async (payload) => {
+    const { id } = payload;
+    const result = await LinkModel.findByIdAndDelete(id);
+    if (!result) throw new Error('Link not found');
+    return 'Deleted successfully';
+  },
   getLink: () => {},
   updateLink: () => {},
 });
