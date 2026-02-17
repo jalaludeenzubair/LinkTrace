@@ -19,6 +19,7 @@
   "dependencies": {
     "@typegoose/typegoose": "^13.1.0",
     "amqplib": "^0.10.9",
+    "axios": "^1.13.5",
     "express": "^5.2.1",
     "mongoose": "^9.1.6",
     "reflect-metadata": "^0.2.2",

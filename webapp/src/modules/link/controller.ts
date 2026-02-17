@@ -1,14 +1,16 @@
+import { QUEUE_NAME } from '../../constants/queue.js';
+
 interface LinkInterface {}
 
 const LinkController = () => ({
   createLink: (payload, ip, ch) => {
-    console.log(ip);
     const { url } = payload;
     const queuePayload = {
-      url,
-      ip,
+      body: { originalUrl: 'url', ip: '24.48.0.1' },
+      type: 'CREATE_DATA',
     };
-    console.log(queuePayload);
+    ch.publishToQueue(QUEUE_NAME.IP, queuePayload);
+    return 'Pushed to the Queue Successfully';
   },
   deleteLink: () => {},
   getLink: () => {},

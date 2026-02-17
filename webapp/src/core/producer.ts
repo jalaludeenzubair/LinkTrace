@@ -3,9 +3,13 @@ import amqp from 'amqplib';
 class Producer {
   private ch: amqp.Channel | null = null;
   private con: amqp.Connection | null = null;
+  private instance: Producer | null = null;
   constructor() {
     this.connect()
-      .then(() => console.log('Connected to RabbitMQ'))
+      .then(() => {
+        console.log('Connected to RabbitMQ');
+        this.instance = this;
+      })
       .catch((err) => {
         console.error('Failed to connect to RabbitMQ:', err);
       });
@@ -16,6 +20,9 @@ class Producer {
   }
   getChannel() {
     return this.ch;
+  }
+  getInstance() {
+    return this.instance;
   }
 
   async publishToQueue(queueName: string, payload: any) {

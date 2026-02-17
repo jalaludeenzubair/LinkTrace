@@ -16,6 +16,18 @@
         "MONGODB_URI": "mongodb://127.0.0.1:27017/LinkTrace",
         "RABBITMQ_URL": "amqp://guest:guest@localhost:5672/"
       }
+    },
+    {
+      "type": "node",
+      "request": "launch",
+      "name": "queue",
+      "skipFiles": ["<node_internals>/**"],
+      "program": "${workspaceFolder}\\webapp\\dist\\queue\\index.js",
+      "outFiles": ["${workspaceFolder}/**/*.js"],
+      "env": {
+        "RABBITMQ_URL": "amqp://guest:guest@localhost:5672/",
+        "IP_API": "http://ip-api.com/json/"
+      }
     }
   ]
 }
