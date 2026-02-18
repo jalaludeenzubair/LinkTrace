@@ -11,8 +11,11 @@ const LinkValidator = () => ({
       throw new Error('ID is required');
     }
   },
-  getLink: (īd) => {},
-  updateLink: () => {},
+  getLink: (id) => {
+    if (!id) {
+      throw new Error('ID is required');
+    }
+  },
 });
 
 export default LinkValidator;

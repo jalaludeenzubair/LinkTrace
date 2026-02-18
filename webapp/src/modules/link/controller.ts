@@ -16,8 +16,15 @@ const LinkController = () => ({
     if (!result) throw new Error('Link not found');
     return 'Deleted successfully';
   },
-  getLink: () => {},
-  updateLink: () => {},
+  getLink: (id) => {
+    const projection = {
+      alive: 0,
+      __v: 0,
+    };
+    const data = LinkModel.findById(id, projection);
+    if (!data) throw new Error('Link not found');
+    return data;
+  },
 });
 
 export default LinkController;
