@@ -15,7 +15,9 @@
         "PORT": "8080",
         "MONGODB_URI": "mongodb://127.0.0.1:27017/LinkTrace",
         "RABBITMQ_URL": "amqp://guest:guest@localhost:5672/",
-        "SESSION_SECRET": "%TIM4T]}M3u@#R(o"
+        "SESSION_SECRET": "%TIM4T]}M3u@#R(o",
+        "CORS_ORIGIN": "http://localhost.com",
+        "SECRET_KEY_CSRF": "VQuAgz7bypBl6J4quQUPeWI6pti3IqW0nsj0NYHIrZZ"
       }
     },
     {
