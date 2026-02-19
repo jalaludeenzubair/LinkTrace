@@ -9,7 +9,6 @@ import passport from 'passport';
 import passportInit from './passport.js';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
-import { validateCSRFToken } from './modules/user/helper.js';
 
 const app = express();
 
@@ -41,7 +40,7 @@ app.use(passport.session());
 
 app.use(attachMQ);
 
-app.use('/api/link', validateCSRFToken, LinkRouter);
+app.use('/api/link', LinkRouter);
 app.use('/api/user', UserRouter);
 
 passportInit();

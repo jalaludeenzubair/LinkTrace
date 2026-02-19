@@ -13,20 +13,23 @@ export class User {
   @prop({ unique: true })
   public password?: string;
 
-  @prop({ default: 1 })
-  public alive?: number;
-
-  @prop({ default: Date.now() })
-  public createdAt?: Date;
-
   @prop({ default: [] })
   public featureFlags?: string[];
 
   @prop()
-  public deletedAt?: Date;
+  public linkCount?: number;
+
+  @prop({ default: Date.now() })
+  public createdAt?: Date;
 
   @prop({ default: Date.now() })
   public updatedAt?: Date;
+
+  @prop({ default: 1 })
+  public alive?: number;
+
+  @prop()
+  public deletedAt?: Date;
 }
 
 const UserModel = getModelForClass(User, {
