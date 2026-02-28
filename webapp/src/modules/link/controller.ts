@@ -6,6 +6,7 @@ import {
 } from '../../core/helper.js';
 import Producer from '../../core/producer.js';
 import { UserType } from '../user/user.model.js';
+import { validateFlag } from './library.js';
 import LinkModel from './link.model.js';
 import {
   createLinkPayload,
@@ -20,6 +21,8 @@ const LinkController = (): LinkControllerInterface => ({
   ): Promise<string> => {
     const { url } = payload;
     const { userName } = user;
+    const check = validateFlag(user);
+    if (!check) throw new Error('Does not have permission to create link');
     const shortenUrl = generateUniqueID();
     await LinkModel.insertOne({
       originalUrl: url,
