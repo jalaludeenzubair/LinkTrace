@@ -9,6 +9,8 @@ import passport from 'passport';
 import passportInit from './passport.js';
 import cors from 'cors';
 import rateLimit from 'express-rate-limit';
+import { isAuthenticated } from './modules/auth/library.js';
+import ViewRouter from './modules/view/route.js';
 
 const app = express();
 
@@ -39,9 +41,11 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use(attachMQ);
+app.use(isAuthenticated);
 
 app.use('/api/link', LinkRouter);
 app.use('/api/user', UserRouter);
+app.use('/api/view', ViewRouter);
 
 passportInit();
 connectDB();

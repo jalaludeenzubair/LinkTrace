@@ -7,10 +7,15 @@ import {
 import LinkModel from './link.model.js';
 
 const LinkController = () => ({
-  createLink: async (payload) => {
+  createLink: async (payload, user) => {
     const { url } = payload;
+    const { userName } = user;
     const shortenUrl = generateUniqueID();
-    await LinkModel.insertOne({ originalUrl: url, shortenUrl });
+    await LinkModel.insertOne({
+      originalUrl: url,
+      shortenUrl,
+      userName,
+    });
     return generateShortenUrl(shortenUrl);
   },
   deleteLink: async (payload) => {
@@ -24,7 +29,6 @@ const LinkController = () => ({
       alive: 0,
       __v: 0,
     };
-
     const cachedData = checkCache(id);
     if (cachedData) {
       console.log(`Cache hit for key: ${id}`);

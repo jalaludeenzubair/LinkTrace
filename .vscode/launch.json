@@ -13,6 +13,8 @@
       "outFiles": ["${workspaceFolder}/**/*.js"],
       "env": {
         "PORT": "8080",
+        "NODE_ENV": "development",
+        "BASE_URL": "http://localhost:8080",
         "MONGODB_URI": "mongodb://127.0.0.1:27017/LinkTrace",
         "RABBITMQ_URL": "amqp://guest:guest@localhost:5672/",
         "SESSION_SECRET": "%TIM4T]}M3u@#R(o",

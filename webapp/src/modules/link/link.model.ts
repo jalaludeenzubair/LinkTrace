@@ -18,6 +18,9 @@ export class Link {
 
   @prop({ default: Date.now() })
   public updatedAt?: Date;
+
+  @prop({ required: true })
+  public userName!: string;
 }
 
 const LinkModel = getModelForClass(Link, {

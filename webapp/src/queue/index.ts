@@ -14,7 +14,7 @@ export const consumeFromQueue = async (queueName, actions): Promise<void> => {
   ch.consume(queueName, async (payload) => {
     if (payload) {
       const { type, body } = JSON.parse(payload.content.toString('utf8'));
-      console.log(`Message received from queue ${queueName}:`);
+      console.log(`Message received from queue ${queueName}`);
       if (!actions[type]) {
         console.log(
           `No action is registered for the queue ${queueName} and type ${type}`,

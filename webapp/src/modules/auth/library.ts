@@ -1,4 +1,5 @@
 import crypto from 'crypto';
+import UserModel from '../user/user.model.js';
 
 export function generateHmacSha256(secretKey: string, message: string) {
   const hmac = crypto.createHmac('sha256', secretKey);
@@ -19,4 +20,14 @@ export const validateCSRFToken = (req, res, next) => {
     return res.status(401).send('Unauthorized');
   }
   next();
+};
+
+export const isAuthenticated = async (req, res, next) => {
+  if (process.env.NODE_ENV === 'development') {
+    const { id } = req.headers;
+    const user = await UserModel.findById(id);
+    req.user = user;
+    return next();
+  }
+  validateCSRFToken(req, res, next);
 };

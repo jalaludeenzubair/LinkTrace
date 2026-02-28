@@ -13,7 +13,7 @@ router.post(
   ResponseHandler({
     validator: validator.createLink,
     controller: controller.createLink,
-    props: (req) => [req.body],
+    props: (req) => [req.body, req.user],
   }),
 );
 
