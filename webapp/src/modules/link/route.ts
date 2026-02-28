@@ -1,4 +1,4 @@
-import ResponseHandler from '../../core/Response.js';
+import ResponseHandler, { ResponseType } from '../../core/Response.js';
 import LinkController from './controller.js';
 import LinkValidator from './validator.js';
 import express from 'express';
@@ -22,7 +22,13 @@ router.get(
   ResponseHandler({
     validator: validator.getLink,
     controller: controller.getLink,
-    props: (req) => [req.params.id],
+    props: (req) => [
+      req.params.id,
+      req.ip,
+      req.headers['user-agent'],
+      req.amqp,
+    ],
+    type: ResponseType.REDIRECT,
   }),
 );
 

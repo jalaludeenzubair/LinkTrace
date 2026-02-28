@@ -1,4 +1,5 @@
 import Consumer from '../core/consumer.js';
+import connectDB from '../db.js';
 
 const consumer = new Consumer();
 
@@ -28,6 +29,7 @@ export const consumeFromQueue = async (queueName, actions): Promise<void> => {
 };
 
 (async () => {
+  connectDB();
   await consumer.connect();
   arr.forEach(async (path) => {
     const module = await import(path);

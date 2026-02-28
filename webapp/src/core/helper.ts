@@ -3,3 +3,7 @@ export const generateUniqueID = () => {
   const random = Math.random().toString(32).slice(2);
   return unique + random;
 };
+
+export const generateShortenUrl = (id: string) => {
+  return `${process.env.BASE_URL}/api/link/get/${id}`;
+};

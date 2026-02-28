@@ -1,11 +1,26 @@
-import { convertIpToDetails } from '../../library/link.js';
+import { convertDeviceInfo, convertIpToDetails } from '../../library/link.js';
+
+import DeviceDetector from 'device-detector-js';
+import HistoryModel from '../../modules/link/history.model.js';
+
+const deviceDetector = new DeviceDetector();
 
 const actions = {
   CREATE_DATA: async (payload) => {
-    const { originalUrl, ip } = payload;
+    const { id, ip, userAgent } = payload;
     const data = await convertIpToDetails(ip);
-    console.log('Data to be saved:', { originalUrl, ...data });
-    //TODO: Save the data to the database
+    const deviceDetails = deviceDetector.parse(userAgent);
+    const deviceInfo = convertDeviceInfo(deviceDetails);
+    const finalData = {
+      linkId: id,
+      ...data,
+      metadata: deviceInfo,
+    };
+    try {
+      await HistoryModel.insertOne(finalData);
+    } catch (error) {
+      console.error('Error inserting history data:', error);
+    }
   },
 };
 

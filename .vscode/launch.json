@@ -29,7 +29,8 @@
       "outFiles": ["${workspaceFolder}/**/*.js"],
       "env": {
         "RABBITMQ_URL": "amqp://guest:guest@localhost:5672/",
-        "IP_API": "http://ip-api.com/json/"
+        "IP_API": "http://ip-api.com/json/",
+        "MONGODB_URI": "mongodb://127.0.0.1:27017/LinkTrace"
       }
     }
   ]

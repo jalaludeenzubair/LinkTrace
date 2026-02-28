@@ -1,7 +1,5 @@
-import { generateUniqueID } from '../../core/helper.js';
+import { generateShortenUrl, generateUniqueID } from '../../core/helper.js';
 import LinkModel from './link.model.js';
-
-interface LinkInterface {}
 
 const LinkController = () => ({
   createLink: async (payload) => {
@@ -16,14 +14,25 @@ const LinkController = () => ({
     if (!result) throw new Error('Link not found');
     return 'Deleted successfully';
   },
-  getLink: (id) => {
+  getLink: async (id, ip, userAgent, queue) => {
     const projection = {
       alive: 0,
       __v: 0,
     };
-    const data = LinkModel.findById(id, projection);
+    const data = await LinkModel.findById(id, projection);
     if (!data) throw new Error('Link not found');
-    return data;
+    const body = {
+      ip: '122.164.80.239',
+      // ip,
+      userAgent,
+      id,
+    };
+    const payload = {
+      type: 'CREATE_DATA',
+      body,
+    };
+    queue.publishToQueue('IP', payload);
+    return generateShortenUrl(data.originalUrl);
   },
 });
 
