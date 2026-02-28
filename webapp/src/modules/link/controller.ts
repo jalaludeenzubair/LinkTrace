@@ -1,4 +1,9 @@
-import { generateShortenUrl, generateUniqueID } from '../../core/helper.js';
+import {
+  checkCache,
+  generateShortenUrl,
+  generateUniqueID,
+  setCache,
+} from '../../core/helper.js';
 import LinkModel from './link.model.js';
 
 const LinkController = () => ({
@@ -6,7 +11,7 @@ const LinkController = () => ({
     const { url } = payload;
     const shortenUrl = generateUniqueID();
     await LinkModel.insertOne({ originalUrl: url, shortenUrl });
-    return shortenUrl;
+    return generateShortenUrl(shortenUrl);
   },
   deleteLink: async (payload) => {
     const { id } = payload;
@@ -19,7 +24,18 @@ const LinkController = () => ({
       alive: 0,
       __v: 0,
     };
-    const data = await LinkModel.findById(id, projection);
+
+    const cachedData = checkCache(id);
+    if (cachedData) {
+      console.log(`Cache hit for key: ${id}`);
+      return cachedData;
+    }
+    const data = await LinkModel.findOne(
+      {
+        shortenUrl: id,
+      },
+      projection,
+    );
     if (!data) throw new Error('Link not found');
     const body = {
       ip: '122.164.80.239',
@@ -32,7 +48,9 @@ const LinkController = () => ({
       body,
     };
     queue.publishToQueue('IP', payload);
-    return generateShortenUrl(data.originalUrl);
+    const result = data.originalUrl;
+    setCache(id, result);
+    return result;
   },
 });
 
