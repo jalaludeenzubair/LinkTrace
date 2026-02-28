@@ -11,7 +11,10 @@ class Consumer {
     return this.ch;
   }
 
-  async consumeFromQueue(name, actions) {
+  async consumeFromQueue(
+    name: string,
+    actions: Record<string, (data: any) => Promise<void>>,
+  ) {
     const ch = this.getChannel();
     if (!ch) throw new Error('RabbitMQ channel is not available');
     await ch.assertQueue(name, { durable: true });

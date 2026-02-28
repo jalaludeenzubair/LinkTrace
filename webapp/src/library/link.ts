@@ -1,6 +1,50 @@
 import axios from 'axios';
 
-const convertData = (data: any) => {
+interface IpDetails {
+  country: string;
+  countryCode: string;
+  region: string;
+  regionName: string;
+  city: string;
+  pinCode: string;
+  lat: string;
+  lon: string;
+  timezone: string;
+  status: string;
+  zip: string;
+}
+
+export interface DeviceInfo {
+  type: string;
+  app: string;
+  appVersion: string;
+  deviceType: string;
+  deviceModel: string;
+  os: string;
+  osVersion: string;
+  platform: string;
+}
+
+export interface DeviceData {
+  client: {
+    type: string;
+    name: string;
+    version: string;
+  };
+  device?: {
+    type: string;
+    model: string;
+  };
+  os?: {
+    name: string;
+    version: string;
+    platform: string;
+  };
+}
+type LinkData = Omit<IpDetails, 'status' | 'zip'> & {
+  pinCode: string;
+};
+const convertData = (data: IpDetails) => {
   const {
     status,
     country,
@@ -30,7 +74,7 @@ const convertData = (data: any) => {
   };
 };
 
-export const convertIpToDetails = async (ip: string): Promise<any> => {
+export const convertIpToDetails = async (ip: string): Promise<LinkData> => {
   try {
     const response = await axios.get(`${process.env.IP_API}${ip}`);
     return convertData(response.data);
@@ -40,7 +84,7 @@ export const convertIpToDetails = async (ip: string): Promise<any> => {
   }
 };
 
-export const convertDeviceInfo = (data) => {
+export const convertDeviceInfo = (data: DeviceData): DeviceInfo => {
   const { client, device, os } = data;
   return {
     type: client.type,

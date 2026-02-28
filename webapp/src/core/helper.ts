@@ -11,8 +11,8 @@ export const generateShortenUrl = (id: string) => {
 };
 
 const cache = new NodeCache({ stdTTL: 60, checkperiod: 120 });
-export const checkCache = (key) => {
-  const cachedData = cache.get(key);
+export const checkCache = (key: string): string => {
+  const cachedData: string | undefined = cache.get(key);
   if (cachedData) {
     console.log(`Cache hit for key: ${key}`);
     return cachedData;
@@ -20,6 +20,6 @@ export const checkCache = (key) => {
   console.log(`Cache miss for key: ${key}`);
 };
 
-export const setCache = (key, value) => {
+export const setCache = (key: string, value: string) => {
   cache.set(key, value);
 };

@@ -1,8 +1,9 @@
 import bcrypt from 'bcryptjs';
 import UserModel from './user.model.js';
+import { registerPayload, UserControllerInterface } from './types.js';
 
-const UserController = () => ({
-  register: async (userData) => {
+const UserController = (): UserControllerInterface => ({
+  register: async (userData: registerPayload) => {
     const { userName, password, firstName, lastName } = userData;
     const salt = await bcrypt.genSalt(10);
     const hashedPassword = await bcrypt.hash(password, salt);

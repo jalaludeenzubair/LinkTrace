@@ -3,7 +3,7 @@ import LinkModel from '../link/link.model.js';
 
 const ViewController = () => ({
   getLinks: async (payload: any, user: any) => {
-    const { limit = 10, page = 1 } = payload;
+    const { limit, page } = payload;
     const { userName } = user;
 
     const query = { userName };

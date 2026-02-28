@@ -4,10 +4,20 @@ import {
   generateUniqueID,
   setCache,
 } from '../../core/helper.js';
+import Producer from '../../core/producer.js';
+import { UserType } from '../user/user.model.js';
 import LinkModel from './link.model.js';
+import {
+  createLinkPayload,
+  deleteLinkPayload,
+  LinkControllerInterface,
+} from './types.js';
 
-const LinkController = () => ({
-  createLink: async (payload, user) => {
+const LinkController = (): LinkControllerInterface => ({
+  createLink: async (
+    payload: createLinkPayload,
+    user: UserType,
+  ): Promise<string> => {
     const { url } = payload;
     const { userName } = user;
     const shortenUrl = generateUniqueID();
@@ -18,13 +28,18 @@ const LinkController = () => ({
     });
     return generateShortenUrl(shortenUrl);
   },
-  deleteLink: async (payload) => {
+  deleteLink: async (payload: deleteLinkPayload): Promise<string> => {
     const { id } = payload;
     const result = await LinkModel.findByIdAndDelete(id);
     if (!result) throw new Error('Link not found');
     return 'Deleted successfully';
   },
-  getLink: async (id, ip, userAgent, queue) => {
+  getLink: async (
+    id: string,
+    ip: string,
+    userAgent: string,
+    queue: Producer,
+  ): Promise<string> => {
     const projection = {
       alive: 0,
       __v: 0,

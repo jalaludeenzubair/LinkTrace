@@ -1,3 +1,3 @@
-export const QUEUE_NAME = {
+export const QUEUE_NAME: Record<string, string> = {
   IP: 'IP',
 };
