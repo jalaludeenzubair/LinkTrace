@@ -17,21 +17,6 @@ router.post(
   }),
 );
 
-router.get(
-  '/get/:id',
-  ResponseHandler({
-    validator: validator.getLink,
-    controller: controller.getLink,
-    props: (req) => [
-      req.params.id,
-      req.ip,
-      req.headers['user-agent'],
-      req.amqp,
-    ],
-    type: ResponseType.REDIRECT,
-  }),
-);
-
 router.delete(
   '/delete',
   ResponseHandler({

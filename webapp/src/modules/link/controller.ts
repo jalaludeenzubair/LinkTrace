@@ -21,8 +21,8 @@ const LinkController = (): LinkControllerInterface => ({
   ): Promise<string> => {
     const { url } = payload;
     const { userName } = user;
-    const check = validateFlag(user);
-    if (!check) throw new Error('Does not have permission to create link');
+    const valid = validateFlag(user);
+    if (!valid) throw new Error('Does not have permission to create link');
     const shortenUrl = generateUniqueID();
     await LinkModel.insertOne({
       originalUrl: url,
@@ -47,6 +47,17 @@ const LinkController = (): LinkControllerInterface => ({
       alive: 0,
       __v: 0,
     };
+    const body = {
+      ip: '122.164.80.239',
+      // ip,
+      userAgent,
+      id,
+    };
+    const payload = {
+      type: 'CREATE_DATA',
+      body,
+    };
+    queue.publishToQueue('IP', payload);
     const cachedData = checkCache(id);
     if (cachedData) {
       console.log(`Cache hit for key: ${id}`);
@@ -59,17 +70,7 @@ const LinkController = (): LinkControllerInterface => ({
       projection,
     );
     if (!data) throw new Error('Link not found');
-    const body = {
-      ip: '122.164.80.239',
-      // ip,
-      userAgent,
-      id,
-    };
-    const payload = {
-      type: 'CREATE_DATA',
-      body,
-    };
-    queue.publishToQueue('IP', payload);
+
     const result = data.originalUrl;
     setCache(id, result);
     return result;

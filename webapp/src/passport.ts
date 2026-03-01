@@ -28,10 +28,10 @@ const passportInit = () => {
     done(null, user.id);
   });
 
-  passport.deserializeUser(function (user, done) {
-    UserModel.findById(user.id, function (err, user) {
-      done(err, user);
-    });
+  passport.deserializeUser(function (id, done) {
+    UserModel.findById(id)
+      .then((user) => done(null, user))
+      .catch((err) => done(err));
   });
 };
 

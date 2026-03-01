@@ -23,7 +23,7 @@ export const validateCSRFToken = (req, res, next) => {
 };
 
 export const isAuthenticated = async (req, res, next) => {
-  if (process.env.NODE_ENV === 'development') {
+  if (!req.user && process.env.NODE_ENV === 'development') {
     const { id } = req.headers;
     const user = await UserModel.findById(id);
     req.user = user;

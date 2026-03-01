@@ -11,8 +11,12 @@ import cors from 'cors';
 import rateLimit from 'express-rate-limit';
 import { isAuthenticated } from './modules/auth/library.js';
 import ViewRouter from './modules/view/route.js';
+import lnkRouter from './modules/visit/route.js';
+import cookieParser from 'cookie-parser';
 
 const app = express();
+
+app.use(cookieParser());
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
@@ -25,7 +29,7 @@ const corsOptions = {
 };
 
 const apiLimiter = rateLimit({
-  windowMs: 15 * 60 * 1000,
+  windowMs: 1 * 60 * 1000,
   max: 100,
 });
 
@@ -40,11 +44,15 @@ app.use(
 app.use(passport.initialize());
 app.use(passport.session());
 
+app.use('/api/user', UserRouter);
+
 app.use(attachMQ);
+
+app.use('/api/lnk', lnkRouter);
+
 app.use(isAuthenticated);
 
 app.use('/api/link', LinkRouter);
-app.use('/api/user', UserRouter);
 app.use('/api/view', ViewRouter);
 
 passportInit();

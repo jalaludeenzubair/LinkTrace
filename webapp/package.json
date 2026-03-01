@@ -20,6 +20,7 @@
     "@typegoose/typegoose": "^13.1.0",
     "amqplib": "^0.10.9",
     "axios": "^1.13.5",
+    "cookie-parser": "^1.4.7",
     "cors": "^2.8.6",
     "express": "^5.2.1",
     "express-rate-limit": "^8.2.1",

@@ -32,4 +32,5 @@ export const LoginValidator = (req, res, next) => {
   const { userName, password } = req.body;
   if (!userName) throw new Error('Username is required');
   if (!password) throw new Error('Password is required');
+  next();
 };
