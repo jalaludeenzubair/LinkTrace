@@ -13,8 +13,7 @@ const LinkValidator = (): LinkValidatorInterface => ({
       throw new Error('URL is required');
     }
   },
-  deleteLink: (payload: deleteLinkPayload, user: UserType) => {
-    const { id } = payload;
+  deleteLink: (id: string) => {
     if (!id) {
       throw new Error('ID is required');
     }

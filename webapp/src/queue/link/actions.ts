@@ -19,6 +19,7 @@ const actions = {
       linkId: id,
       ...data,
       metadata: deviceInfo,
+      createdAt: new Date(),
     };
     try {
       await HistoryModel.insertOne(finalData);

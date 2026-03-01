@@ -9,7 +9,7 @@ export interface deleteLinkPayload {
 }
 export interface LinkControllerInterface {
   createLink: (payload: createLinkPayload, user: UserType) => Promise<string>;
-  deleteLink: (payload: deleteLinkPayload) => Promise<string>;
+  deleteLink: (id: string) => Promise<string>;
   getLink: (
     id: string,
     ip: string,
@@ -20,6 +20,6 @@ export interface LinkControllerInterface {
 
 export interface LinkValidatorInterface {
   createLink: (payload: createLinkPayload, user: UserType) => void;
-  deleteLink: (payload: deleteLinkPayload, user: UserType) => void;
+  deleteLink: (id: string) => void;
   getLink: (id: string, ip: string, userAgent: string, queue: Producer) => void;
 }

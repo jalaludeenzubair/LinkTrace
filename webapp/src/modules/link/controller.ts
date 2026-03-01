@@ -31,8 +31,7 @@ const LinkController = (): LinkControllerInterface => ({
     });
     return generateShortenUrl(shortenUrl);
   },
-  deleteLink: async (payload: deleteLinkPayload): Promise<string> => {
-    const { id } = payload;
+  deleteLink: async (id: string): Promise<string> => {
     const result = await LinkModel.findByIdAndDelete(id);
     if (!result) throw new Error('Link not found');
     return 'Deleted successfully';

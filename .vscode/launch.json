@@ -5,6 +5,16 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "Launch Chrome",
+      "request": "launch",
+      "type": "chrome",
+      "url": "http://localhost:3000",
+      "webRoot": "${workspaceFolder}",
+      "env": {
+        "PUBLIC_URL": "http://localhost:8080"
+      }
+    },
+    {
       "type": "node",
       "request": "launch",
       "name": "Launch Program",
@@ -18,7 +28,8 @@
         "MONGODB_URI": "mongodb://127.0.0.1:27017/LinkTrace",
         "RABBITMQ_URL": "amqp://guest:guest@localhost:5672/",
         "SESSION_SECRET": "%TIM4T]}M3u@#R(o",
-        "CORS_ORIGIN": "http://localhost.com",
+        "CORS_ORIGIN": "http://localhost:3000",
+        // "CORS_ORIGIN": "*",
         "SECRET_KEY_CSRF": "VQuAgz7bypBl6J4quQUPeWI6pti3IqW0nsj0NYHIrZZ"
       }
     },

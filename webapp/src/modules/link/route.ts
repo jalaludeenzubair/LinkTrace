@@ -18,11 +18,11 @@ router.post(
 );
 
 router.delete(
-  '/delete',
+  '/delete/:id',
   ResponseHandler({
     validator: validator.deleteLink,
     controller: controller.deleteLink,
-    props: (req) => [req.body],
+    props: (req) => [req.params.id],
   }),
 );
 

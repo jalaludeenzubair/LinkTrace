@@ -34,3 +34,10 @@ export const LoginValidator = (req, res, next) => {
   if (!password) throw new Error('Password is required');
   next();
 };
+
+export const LogOut = (req, res) => {
+  req.logout((err) => {
+    if (err) return res.status(500).json({ message: 'Logout failed' });
+    return res.json({ message: 'Logout successful' });
+  });
+};

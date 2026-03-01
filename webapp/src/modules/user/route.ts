@@ -2,7 +2,7 @@ import ResponseHandler from '../../core/Response.js';
 import express from 'express';
 import UserValidator from './validator.js';
 import UserController from './controller.js';
-import { Login, LoginValidator } from './helper.js';
+import { Login, LoginValidator, LogOut } from './helper.js';
 const router = express.Router();
 
 const validator = UserValidator();
@@ -18,5 +18,7 @@ router.post(
 );
 
 router.post('/login', LoginValidator, Login);
+
+router.post('/logout', LogOut);
 
 export default router;

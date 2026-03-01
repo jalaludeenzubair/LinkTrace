@@ -1,6 +1,6 @@
-import { registerPayload } from './types.js';
+import { registerPayload, UserValidatorInterface } from './types.js';
 
-const UserValidator = () => ({
+const UserValidator = (): UserValidatorInterface => ({
   register: (userData: registerPayload) => {
     const { userName, password, firstName, lastName } = userData;
     if (!userName) throw new Error('Username is required');
