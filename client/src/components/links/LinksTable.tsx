@@ -1,8 +1,9 @@
-import React from "react";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { Link } from "../../types/link.types";
 import toast from "react-hot-toast";
 import { constructShortUrl } from "../../library/helper";
+import { DeleteConfirmationModal } from "../DeleteModal";
 
 interface LinksTableProps {
   links: Link[];
@@ -16,6 +17,9 @@ export const LinksTable: React.FC<LinksTableProps> = ({
   deleteLinkCallback,
 }) => {
   const navigate = useNavigate();
+  const [isDeleteOpen, setIsDeleteOpen] = useState(false);
+  const [selectedLinkId, setSelectedLinkId] = useState<string | null>(null);
+  const [isDeleting, setIsDeleting] = useState(false);
 
   const formatDate = (dateString: string) => {
     return new Date(dateString).toLocaleDateString("en-US", {
@@ -47,6 +51,11 @@ export const LinksTable: React.FC<LinksTableProps> = ({
       </div>
     );
   }
+
+  const handleDeleteClick = (id: string) => {
+    setSelectedLinkId(id);
+    setIsDeleteOpen(true);
+  };
 
   return (
     <div className="table-container">
@@ -102,7 +111,7 @@ export const LinksTable: React.FC<LinksTableProps> = ({
                     style={{ padding: "0.25rem 0.75rem", fontSize: "0.75rem" }}
                     onClick={(e) => {
                       e.stopPropagation();
-                      deleteLinkCallback(link._id);
+                      handleDeleteClick(link._id);
                     }}
                   >
                     Delete
@@ -113,6 +122,19 @@ export const LinksTable: React.FC<LinksTableProps> = ({
           ))}
         </tbody>
       </table>
+      <DeleteConfirmationModal
+        isOpen={isDeleteOpen}
+        onClose={() => setIsDeleteOpen(false)}
+        onConfirm={() => {
+          deleteLinkCallback(selectedLinkId!);
+          setIsDeleteOpen(false);
+          setIsDeleting(false);
+        }}
+        isLoading={isDeleting}
+        title="Delete Link"
+        message="Are you sure you want to delete this link? This action cannot be undone."
+        confirmText="Delete Link"
+      />
     </div>
   );
 };

@@ -40,7 +40,7 @@ export const LinkHistoryPage: React.FC = () => {
           className="btn"
           style={{ marginBottom: "var(--spacing-md)" }}
         >
-          <span>&larr; Back to Dashboard</span>
+          <span>⬅️ Back to Dashboard</span>
         </button>
 
         <h1 style={{ fontSize: "2rem", marginBottom: "var(--spacing-sm)" }}>
