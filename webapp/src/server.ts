@@ -13,6 +13,7 @@ import { isAuthenticated } from './modules/auth/library.js';
 import ViewRouter from './modules/view/route.js';
 import lnkRouter from './modules/visit/route.js';
 import cookieParser from 'cookie-parser';
+import { RedisInitializer } from './core/Redis.js';
 
 const app = express();
 
@@ -55,6 +56,7 @@ app.use(isAuthenticated);
 app.use('/api/link', LinkRouter);
 app.use('/api/view', ViewRouter);
 
+RedisInitializer();
 passportInit();
 connectDB();
 

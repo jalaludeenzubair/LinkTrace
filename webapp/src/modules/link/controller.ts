@@ -1,10 +1,6 @@
-import {
-  checkCache,
-  generateShortenUrl,
-  generateUniqueID,
-  setCache,
-} from '../../core/helper.js';
+import { generateShortenUrl, generateUniqueID } from '../../core/helper.js';
 import Producer from '../../core/producer.js';
+import { checkCache, setCache } from '../../core/Redis.js';
 import { UserType } from '../user/user.model.js';
 import { validateFlag } from './library.js';
 import LinkModel from './link.model.js';
@@ -57,7 +53,7 @@ const LinkController = (): LinkControllerInterface => ({
       body,
     };
     queue.publishToQueue('IP', payload);
-    const cachedData = checkCache(id);
+    const cachedData = await checkCache(id);
     if (cachedData) {
       console.log(`Cache hit for key: ${id}`);
       return cachedData;
@@ -71,7 +67,7 @@ const LinkController = (): LinkControllerInterface => ({
     if (!data) throw new Error('Link not found');
 
     const result = data.originalUrl;
-    setCache(id, result);
+    await setCache(id, result);
     return result;
   },
 });
