@@ -14,6 +14,7 @@ import ViewRouter from './modules/view/route.js';
 import lnkRouter from './modules/visit/route.js';
 import cookieParser from 'cookie-parser';
 import { RedisInitializer } from './core/Redis.js';
+import EditRouter from './modules/update-user/routes.js';
 
 const app = express();
 
@@ -24,7 +25,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 const corsOptions = {
   origin: process.env.CORS_ORIGIN,
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   allowedHeaders: ['Content-Type', 'x-csrf-token'],
   credentials: true,
 };
@@ -50,6 +51,7 @@ app.use('/api/user', UserRouter);
 app.use(attachMQ);
 
 app.use('/api/lnk', lnkRouter);
+app.use('/api/edit-user', EditRouter);
 
 app.use(isAuthenticated);
 

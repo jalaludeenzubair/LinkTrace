@@ -7,6 +7,16 @@ export interface registerPayload {
   lastName: string;
 }
 
+export interface UpdateProfilePayload {
+  firstName?: string;
+  lastName?: string;
+}
+
+export interface UpdatePasswordPayload {
+  currentPassword: string;
+  newPassword: string;
+}
+
 export interface UserControllerInterface {
   register: (userData: registerPayload) => Promise<UserType>;
 }

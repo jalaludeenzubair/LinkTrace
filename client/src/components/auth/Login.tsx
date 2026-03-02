@@ -31,9 +31,9 @@ export const Login: React.FC = () => {
 
     setIsLoading(true);
     try {
-      await api.post("/user/login", formData);
+      const response = await api.post("/user/login", formData);
       toast.success("Login successful!");
-      login();
+      login(response.data.user);
       navigate("/dashboard");
     } catch (error: any) {
       toast.error(error.response?.data?.error || "Login failed");

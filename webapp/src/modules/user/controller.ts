@@ -1,6 +1,11 @@
 import bcrypt from 'bcryptjs';
 import UserModel from './user.model.js';
-import { registerPayload, UserControllerInterface } from './types.js';
+import {
+  registerPayload,
+  UpdatePasswordPayload,
+  UpdateProfilePayload,
+  UserControllerInterface,
+} from './types.js';
 
 const UserController = (): UserControllerInterface => ({
   register: async (userData: registerPayload) => {

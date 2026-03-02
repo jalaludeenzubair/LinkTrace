@@ -9,41 +9,46 @@ interface NavbarProps {
 }
 
 export const Navbar: React.FC<NavbarProps> = ({ onCreateClick }) => {
-  const navigate = useNavigate();
-  const [isLoggingOut, setIsLoggingOut] = React.useState(false);
-  const { logout } = useAuth();
-
-  const handleLogout = async () => {
-    try {
-      setIsLoggingOut(true);
-      await linkService.logout();
-      logout();
-      toast.success("Logged out successfully");
-      navigate("/login");
-    } catch (error) {
-      toast.error("Failed to logout");
-    } finally {
-      setIsLoggingOut(false);
-    }
-  };
+  const { user } = useAuth();
 
   return (
     <nav className="navbar">
       <div className="navbar-container">
-        <a href="/dashboard" className="navbar-logo">
-          LinkTrace
-        </a>
+        <div style={{ display: "flex", alignItems: "center", gap: "2rem" }}>
+          <a href="/dashboard" className="navbar-logo">
+            LinkTrace
+          </a>
+          <div className="navbar-actions">
+            <a
+              href="/dashboard"
+              className="nav-link"
+              style={{
+                textDecoration: "none",
+                color: "var(--color-text)",
+                fontWeight: 500,
+              }}
+            >
+              Dashboard
+            </a>
+            <a
+              href="/dashboard/settings"
+              className="nav-link"
+              style={{
+                textDecoration: "none",
+                color: "var(--color-text)",
+                fontWeight: 500,
+              }}
+            >
+              Settings
+            </a>
+          </div>
+        </div>
         <div className="navbar-actions">
-          <button className="btn btn-primary" onClick={onCreateClick}>
-            <span>+</span> Create Link
-          </button>
-          <button
-            className="btn btn-danger"
-            onClick={() => handleLogout()}
-            disabled={isLoggingOut}
-          >
-            {isLoggingOut ? "Logging out..." : "Logout"}
-          </button>
+          {user?.flags.includes("createLink") && (
+            <button className="btn btn-primary" onClick={onCreateClick}>
+              <span>+</span> Create Link
+            </button>
+          )}
         </div>
       </div>
     </nav>
