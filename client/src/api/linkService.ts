@@ -4,6 +4,7 @@ import {
   LinkView,
   PaginatedResponse,
   ApiResponse,
+  AnalyticsData,
 } from "../types/link.types";
 
 export const linkService = {
@@ -28,7 +29,11 @@ export const linkService = {
     return response.data?.data;
   },
 
-  async getLinkHistory(shortenUrl: string, page: number = 1, limit: number = 10): Promise<PaginatedResponse<LinkView>> {
+  async getLinkHistory(
+    shortenUrl: string,
+    page: number = 1,
+    limit: number = 10,
+  ): Promise<PaginatedResponse<LinkView>> {
     const response = await api.get<ApiResponse<PaginatedResponse<LinkView>>>(
       `/view/links/${shortenUrl}`,
       { params: { page, limit } },
@@ -36,8 +41,8 @@ export const linkService = {
     return response.data?.data;
   },
 
-  async getLinkInsights(id: string): Promise<any> {
-    const response = await api.get<ApiResponse<any>>(
+  async getLinkInsights(id: string): Promise<AnalyticsData> {
+    const response = await api.get<ApiResponse<AnalyticsData>>(
       `/view/links/${id}/insights`,
     );
     return response.data?.data;

@@ -1,8 +1,14 @@
 import HistoryModel from '../link/history.model.js';
 import LinkModel from '../link/link.model.js';
+import { UserType } from '../user/user.model.js';
+import {
+  getLinksPayload,
+  ViewControllerInterface,
+  getDetailsPayload,
+} from './types.js';
 
-const ViewController = () => ({
-  getLinks: async (payload: any, user: any) => {
+const ViewController = (): ViewControllerInterface => ({
+  getLinks: async (payload: getLinksPayload, user: UserType) => {
     const { limit, page } = payload;
     const { userName } = user;
 
@@ -29,7 +35,7 @@ const ViewController = () => ({
       totalPages,
     };
   },
-  getDetails: async (payload: any) => {
+  getDetails: async (payload: getDetailsPayload) => {
     const { id, limit, page } = payload;
     const skip = (page - 1) * limit;
 
@@ -56,7 +62,7 @@ const ViewController = () => ({
       totalPages,
     };
   },
-  getInsights: async (id: string, user: any) => {
+  getInsights: async (id: string, user: UserType) => {
     const totalClicks = await HistoryModel.countDocuments({ linkId: id });
     const regionAgg = await HistoryModel.aggregate([
       { $match: { linkId: id } },

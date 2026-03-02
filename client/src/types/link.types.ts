@@ -44,3 +44,18 @@ export interface ApiResponse<T> {
   data: T;
   error: string | null;
 }
+export interface AnalyticsData {
+  totalClicks: number;
+  regionData: RegionData[];
+  timeSeriesData: TimeSeriesData[];
+}
+
+export interface RegionData {
+  clicks: number;
+  region: string;
+}
+
+export interface TimeSeriesData {
+  clicks: number;
+  date: string;
+}

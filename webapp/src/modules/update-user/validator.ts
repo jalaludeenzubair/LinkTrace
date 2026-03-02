@@ -6,7 +6,7 @@ export interface UserValidatorInterface {
 }
 
 const UpdateUserValidator = (): UserValidatorInterface => ({
-  updateProfile: (data: any) => {
+  updateProfile: (data: UpdateProfilePayload) => {
     const { firstName, lastName } = data;
     if (firstName && firstName.length < 2)
       throw new Error('First name too short');

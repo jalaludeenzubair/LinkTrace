@@ -1,5 +1,12 @@
-const ViewValidator = () => ({
-  getLinks: (payload: any, user) => {
+import { UserType } from '../user/user.model.js';
+import {
+  getDetailsPayload,
+  getLinksPayload,
+  ViewValidatorInterface,
+} from './types.js';
+
+const ViewValidator = (): ViewValidatorInterface => ({
+  getLinks: (payload: getLinksPayload, user: UserType) => {
     const { limit, page } = payload;
     if (!limit) {
       throw new Error('Limit is required');
@@ -8,7 +15,7 @@ const ViewValidator = () => ({
       throw new Error('Page is required');
     }
   },
-  getDetails: (payload: any, user: any) => {
+  getDetails: (payload: getDetailsPayload, user: UserType) => {
     const { id, limit, page } = payload;
     if (!id) {
       throw new Error('ID is required');
@@ -20,7 +27,7 @@ const ViewValidator = () => ({
       throw new Error('Page is required');
     }
   },
-  getInsights: (id: string, user: any) => {
+  getInsights: (id: string, user: UserType) => {
     if (!id) {
       throw new Error('Link ID is required');
     }
