@@ -65,6 +65,7 @@ export const LinksTable: React.FC<LinksTableProps> = ({
             <th>Short URL</th>
             <th>Original URL</th>
             <th>Created</th>
+            <th>Visits</th>
             <th>Actions</th>
           </tr>
         </thead>
@@ -91,6 +92,7 @@ export const LinksTable: React.FC<LinksTableProps> = ({
                 </div>
               </td>
               <td>{formatDate(link.createdAt)}</td>
+              <td>{link.visitCount || 0}</td>
               <td>
                 <div style={{ display: "flex", gap: "0.5rem" }}>
                   <button

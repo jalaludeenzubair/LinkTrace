@@ -21,6 +21,9 @@ export class Link {
 
   @prop({ required: true })
   public userName!: string;
+
+  @prop({ default: 0 })
+  public visitCount?: number;
 }
 
 const LinkModel = getModelForClass(Link, {

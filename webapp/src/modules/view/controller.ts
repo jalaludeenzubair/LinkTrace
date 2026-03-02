@@ -29,13 +29,56 @@ const ViewController = () => ({
       totalPages,
     };
   },
-  getDetails: async (id: string) => {
+  getDetails: async (payload: any) => {
+    const { id, limit, page } = payload;
+    const skip = (page - 1) * limit;
+
     const projection = {
       alive: 0,
       __v: 0,
     };
-    const result = await HistoryModel.find({ linkId: id }, projection);
-    return result;
+    const query = { linkId: id };
+    const options = {
+      skip,
+      limit,
+      sort: { createdAt: -1 },
+    };
+
+    const dataPrm = HistoryModel.find(query, projection, options);
+    const totalPrm = HistoryModel.countDocuments(query);
+    const [data, total] = await Promise.all([dataPrm, totalPrm]);
+    const totalPages = Math.ceil(total / limit);
+
+    return {
+      views: data,
+      total,
+      page,
+      totalPages,
+    };
+  },
+  getInsights: async (id: string, user: any) => {
+    const totalClicks = await HistoryModel.countDocuments({ linkId: id });
+    const regionAgg = await HistoryModel.aggregate([
+      { $match: { linkId: id } },
+      { $group: { _id: '$regionName', clicks: { $sum: 1 } } },
+      { $project: { region: '$_id', clicks: 1, _id: 0 } },
+    ]);
+    const timeSeriesAgg = await HistoryModel.aggregate([
+      { $match: { linkId: id } },
+      {
+        $group: {
+          _id: { $dateToString: { format: '%Y-%m-%d', date: '$createdAt' } },
+          clicks: { $sum: 1 },
+        },
+      },
+      { $project: { date: '$_id', clicks: 1, _id: 0 } },
+      { $sort: { date: 1 } },
+    ]);
+    return {
+      totalClicks,
+      regionData: regionAgg,
+      timeSeriesData: timeSeriesAgg,
+    };
   },
 });
 

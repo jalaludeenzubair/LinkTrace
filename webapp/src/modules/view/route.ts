@@ -22,6 +22,15 @@ router.get(
   ResponseHandler({
     validator: validator.getDetails,
     controller: controller.getDetails,
+    props: (req) => [{ ...req.params, ...req.query }, req.user],
+  }),
+);
+
+router.get(
+  '/links/:id/insights',
+  ResponseHandler({
+    validator: validator.getInsights,
+    controller: controller.getInsights,
     props: (req) => [req.params.id, req.body],
   }),
 );

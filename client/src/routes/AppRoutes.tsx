@@ -3,6 +3,7 @@ import { Login } from "../components/auth/Login";
 import { Signup } from "../components/auth/Signup";
 import { Dashboard } from "../pages/Dashboard";
 import { LinkHistoryPage } from "../pages/LinkHistoryPage";
+import { LinkInsightsPage } from "../pages/LinkInsightsPage";
 import { GuestGuard } from "../HOC/GuestGuard";
 import { AuthGuard } from "../HOC/AuthGuard";
 
@@ -33,11 +34,19 @@ export const AppRoutes: React.FC = () => {
           </AuthGuard>
         }
       />
-      <Route
+       <Route
         path="/dashboard/history/:shortCode"
         element={
           <AuthGuard>
             <LinkHistoryPage />
+          </AuthGuard>
+        }
+      />
+      <Route
+        path="/dashboard/insights/:shortCode"
+        element={
+          <AuthGuard>
+            <LinkInsightsPage />
           </AuthGuard>
         }
       />

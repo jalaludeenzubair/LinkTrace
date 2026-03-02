@@ -28,11 +28,19 @@ export const linkService = {
     return response.data?.data;
   },
 
-  async getLinkHistory(shortenUrl: string): Promise<LinkView[]> {
-    const response = await api.get<ApiResponse<LinkView[]>>(
+  async getLinkHistory(shortenUrl: string, page: number = 1, limit: number = 10): Promise<PaginatedResponse<LinkView>> {
+    const response = await api.get<ApiResponse<PaginatedResponse<LinkView>>>(
       `/view/links/${shortenUrl}`,
+      { params: { page, limit } },
     );
-    return response.data?.data || [];
+    return response.data?.data;
+  },
+
+  async getLinkInsights(id: string): Promise<any> {
+    const response = await api.get<ApiResponse<any>>(
+      `/view/links/${id}/insights`,
+    );
+    return response.data?.data;
   },
 
   async logout(): Promise<void> {

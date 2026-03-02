@@ -67,6 +67,11 @@ const LinkController = (): LinkControllerInterface => ({
     if (!data) throw new Error('Link not found');
 
     const result = data.originalUrl;
+
+    await LinkModel.findOneAndUpdate(
+      { shortenUrl: id },
+      { $inc: { visitCount: 1 } },
+    );
     await setCache(id, result);
     return result;
   },

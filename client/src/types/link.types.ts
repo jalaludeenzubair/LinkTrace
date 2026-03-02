@@ -11,6 +11,7 @@ export interface Link {
   createdAt: string;
   updatedAt: string;
   userName: string;
+  visitCount: number;
 }
 
 export interface LinkView {
